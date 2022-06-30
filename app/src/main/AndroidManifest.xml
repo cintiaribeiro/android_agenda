@@ -12,13 +12,7 @@
         android:theme="@style/Theme.Agenda">
         <activity
             android:name=".ui.activity.FormularioAlunoActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"/>
         <activity
             android:name=".ui.activity.ListAlunoActivity"
             android:exported="true"
