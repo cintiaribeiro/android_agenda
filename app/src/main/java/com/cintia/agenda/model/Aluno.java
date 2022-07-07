@@ -1,6 +1,8 @@
 package com.cintia.agenda.model;
 
-public class Aluno {
+import java.io.Serializable;
+
+public class Aluno implements Serializable {
 
     private final String nome;
     private final String telefone;
@@ -11,6 +13,18 @@ public class Aluno {
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override

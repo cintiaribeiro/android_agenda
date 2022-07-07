@@ -3,6 +3,7 @@ package com.cintia.agenda.ui.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,8 @@ import android.widget.EditText;
 import com.cintia.agenda.R;
 import com.cintia.agenda.model.Aluno;
 import com.cintia.agenda.DAO.AlunoDAO;
+
+import java.io.Serializable;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
@@ -28,6 +31,17 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario_aluno);
         initCampos();
         configBtnSalvar();
+
+        Intent dados = getIntent();
+        Aluno aluno = (Aluno) dados.getSerializableExtra("aluno");
+
+        if(aluno != null){
+            campoNome.setText(aluno.getNome());
+            campoTelefone.setText(aluno.getTelefone());
+            campoEmail.setText(aluno.getEmail());
+        }
+
+
     }
 
     private void configBtnSalvar() {
