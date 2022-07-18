@@ -1,5 +1,7 @@
 package com.cintia.agenda.ui.activity;
 
+import static com.cintia.agenda.ui.activity.ConstantsActivities.CHAVE_ALUNO;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,13 +40,13 @@ public class ListAlunoActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        abreFormAluno();
+                        abreFormModoInsertAluno();
                     }
                 }
         );
     }
 
-    private void abreFormAluno() {
+    private void abreFormModoInsertAluno() {
         startActivity( new Intent(this, FormularioAlunoActivity.class));
     }
 
@@ -57,19 +59,31 @@ public class ListAlunoActivity extends AppCompatActivity {
     private void configLista() {
         ListView listAlunos = findViewById(R.id.activity_lista_alunos_list_view);
         final List<Aluno> alunos = alunoDAO.todos();
+        configAdapter(listAlunos, alunos);
+        configuraListernerDeCliquePorItem(listAlunos);
+    }
+
+    private void configuraListernerDeCliquePorItem(ListView listAlunos) {
+        listAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Aluno alunoSelecionado = (Aluno)adapterView.getItemAtPosition(position);
+                abreFormularioModoEditAluno(alunoSelecionado);
+
+            }
+        });
+    }
+
+    private void abreFormularioModoEditAluno(Aluno aluno) {
+        Intent vaiParaFormActivity = new Intent(ListAlunoActivity.this, FormularioAlunoActivity.class);
+        vaiParaFormActivity.putExtra(CHAVE_ALUNO, aluno);
+        startActivity(vaiParaFormActivity);
+    }
+
+    private void configAdapter(ListView listAlunos, List<Aluno> alunos) {
         listAlunos.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_dropdown_item_1line,
                 alunos));
-        listAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Aluno alunoSelecionado = alunos.get(position);
-                Intent vaiParaFormActivity = new Intent(ListAlunoActivity.this, FormularioAlunoActivity.class);
-                vaiParaFormActivity.putExtra("aluno", alunoSelecionado);
-                startActivity(vaiParaFormActivity);
-
-            }
-        });
     }
 }
